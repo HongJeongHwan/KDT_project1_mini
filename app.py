@@ -1,5 +1,7 @@
 import pandas as pd
 import streamlit as st
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 # 파일불러오기
 file_path1_4 = 'tpss_bcycl_od_statnhm_20240104.csv'
@@ -79,15 +81,15 @@ with col3:
     )
 
 # 조회조건 지정 : 날짜, 시작대여소, 종료대여소
-
 cond_date = df_rent1['기준_날짜']==sel_date
 cond_st = df_rent1['시작_대여소_ID']==sel_st_rent_id
 cond_end = df_rent1['종료_대여소_ID']==sel_end_rent_id
 
+# DataFrame 보여주기(하드코딩) : 아래 코드 해결되면 대체예정 
 if sel_date=='전체':
     if sel_st_rent_id=='전체':
         if sel_end_rent_id=='전체':
-            # cond = ''
+            cond = ''
             st.write(df_rent1.loc[:,:])
         else:
             cond = cond_end
@@ -139,13 +141,38 @@ else:
 # else:
 #     cond=cond[3:]
 #     st.write(df_rent1.loc[cond,:]) 
+
+# DataFrame 보여주기
+# st.write(df_rent1.loc[cond,'종료_대여소_ID'].value_counts(ascending=False))
+# st.write(df_rent1.loc[cond,:])
+# st.write(df_rent1.loc[:,:])
 #########################################################################
 
 
 
 
 
-# DataFrame 보여주기
-# st.write(df_rent1.loc[cond,'종료_대여소_ID'].value_counts(ascending=False))
-# st.write(df_rent1.loc[cond,:])
-# st.write(df_rent1.loc[:,:])
+col_plt1, col_plt2, col_plt3 = st.columns(3)
+
+
+fig1, ax1 = plt.subplots()
+
+## col1 --> 그래프 생성
+with col_plt1:
+    # sns.histplot() 실행
+    st.subheader('전체 건수')
+    sns.countplot(data=df_rent1.loc[cond,:], x='전체_건수', ax=ax1)
+    st.pyplot(fig1)
+
+with col_plt2:
+    # sns.histplot() 실행
+    st.subheader('전체 이용시간(분)')
+    sns.countplot(data=df_rent1.loc[cond,:], x='전체_이용_분', ax=ax1)
+    st.pyplot(fig1)
+
+with col_plt3:
+    # sns.histplot() 실행
+    st.subheader('전체 이용거리(m)')
+    sns.countplot(data=df_rent1.loc[cond,:], x='전체_이용_거리', ax=ax1)
+    st.pyplot(fig1)
+
