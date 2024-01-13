@@ -31,4 +31,4 @@ $git clone https://github.com/HongJeongHwan/KDT_project1_mini.git
 
 ## ★★☆ 함께 작업하며, 함께 공부하고, 함께 성장해요!!! ☆★★
 
-참조 블로그 : https://12716.tistory.com/entry/Git-GitHub-%ED%98%91%EC%97%85%ED%95%98%EA%B8%B0
+github 공동작업 참조 블로그 : https://12716.tistory.com/entry/Git-GitHub-%ED%98%91%EC%97%85%ED%95%98%EA%B8%B0
