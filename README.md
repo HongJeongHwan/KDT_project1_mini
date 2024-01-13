@@ -18,7 +18,7 @@ $git remote add origin https://github.com/HongJeongHwan/KDT_project1_mini.git
 
 $git add . 
 
-$git commit -m "viewtest" 
+$git commit -m "수정한 내용 간단히" 
 
 $git push -u origin main
 
@@ -29,6 +29,6 @@ $git clone https://github.com/HongJeongHwan/KDT_project1_mini.git
 
 더 자세한 사항은 아래 블로그 참조 부탁드립니다.
 
-## 함께 작업하며, 함께 공부하고, 함께 성장해요.
+## ★★☆ 함께 작업하며, 함께 공부하고, 함께 성장해요!!! ☆★★
 
 참조 블로그 : https://12716.tistory.com/entry/Git-GitHub-%ED%98%91%EC%97%85%ED%95%98%EA%B8%B0
