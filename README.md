@@ -22,6 +22,7 @@ $git commit -m "viewtest"
 
 $git push -u origin main
 
+
 #### - 파일 작업전 반드시 해야될 것.
 $git clone https://github.com/HongJeongHwan/KDT_project1_mini.git
 
