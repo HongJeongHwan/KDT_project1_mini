@@ -15,8 +15,11 @@
 ## git bash 이용방법
 #### - 최초 작업시
 $git remote add origin https://github.com/HongJeongHwan/KDT_project1_mini.git
+
 $git add . 
+
 $git commit -m "viewtest" 
+
 $git push -u origin main
 
 #### - 파일 작업전 반드시 해야될 것.
