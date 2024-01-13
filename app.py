@@ -13,7 +13,7 @@ df_rent1_5 = pd.read_csv(file_path1_5,encoding='cp949')
 df_rent1_6 = pd.read_csv(file_path1_6,encoding='cp949')
 
 # 전처리
-
+# 그냥 한번 해봤어..
 # 날짜별 데이터 합치기
 # df_rent1 = pd.concat([df_rent1_4,df_rent1_5,df_rent1_6],axis=0)
 # 데이터가 많아서 streamlit share에서 에러나서 일단 파일 하나로만 테스트 진행
