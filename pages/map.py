@@ -15,7 +15,7 @@ df_master = pd.read_csv(file_path,encoding='cp949')
 df_master.rename(columns={'위도':'lat','경도':'lon'}, inplace = True)
 
 # 이상치 처리
-df_master.loc[:,['lat','lon']].plot(kind='box')
+df_master.loc[:,['lat','lon']].plot(kind='box', rot=45)
 plt.show()
 
 # 경도, 위도가 0인 컬럼이 77개 존재 : 삭제처리
