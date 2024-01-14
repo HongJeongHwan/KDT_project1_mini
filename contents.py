@@ -49,8 +49,11 @@ end_rent_id = np.insert(end_rent_id,0,'선택하세요.')
 
 
 # 화면 구성 ============================================================================
-st.title('서울시 따릉이 정보분석')
-st.header('1단계:날짜, 대여소별 건수, 이용시간, 이용거리 분석')
+st.header('■ KDT mini porject (1조)')
+st.subheader(': 서울시 공공자전거 "따릉이" 데이터 수집 및 분석')
+st.subheader('')
+st.subheader('- 1단계: 날짜, 대여소별 건수, 이용시간 및 거리 분석')
+st.subheader('')
 
 ## 선택 상자 생성
 # 조회조건 layout
@@ -138,9 +141,12 @@ else:
 
 ## 필터링된 데이터 표시
 if ((IsSelected_date==True) | (IsSelected_st_rent_id==True) | (IsSelected_end_rent_id==True)):
+    st.subheader('데이터프레임 출력')
     st.write(df_rent1.loc[cond,:])
+    st.subheader('')
     
 # 차트 보여주기
+    st.subheader('통계 그래프 시각화')
     col_plt1, col_plt2, col_plt3 = st.columns(3)
 
     fig1, ax1 = plt.subplots()
