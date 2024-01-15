@@ -1,8 +1,14 @@
 import numpy as np
 import pandas as pd
 import streamlit as st
+import matplotlib
 import matplotlib.pyplot as plt
 import seaborn as sns
+
+
+# matplotlib 한글사용을 위한 코드
+matplotlib.rcParams['font.family'] = 'Malgun Gothic'
+
 
 # 파일불러오기
 file_path1_4 = './data/tpss_bcycl_od_statnhm_20240104.csv'
@@ -13,7 +19,7 @@ df_rent1_4 = pd.read_csv(file_path1_4,encoding='cp949')
 df_rent1_5 = pd.read_csv(file_path1_5,encoding='cp949')
 df_rent1_6 = pd.read_csv(file_path1_6,encoding='cp949')
 
-# 전처리
+# 전처리 =======================================================================
 
 # 날짜별 데이터 합치기
 df_rent1 = pd.concat([df_rent1_4,df_rent1_5,df_rent1_6],axis=0)
@@ -29,6 +35,20 @@ df_rent1['기준_날짜'] = df_rent1['기준_날짜'].astype('str')
 #                          '시작_대여소명':'st_spot_name','종료_대여소_ID':'end_spot_id','종료_대여소명':'end_spot_name',
 #                          '전체_건수':'tot_count','전체_이용_분':'tot_use_min','전체_이용_거리':'tot_dist'}, inplace=True)
 
+# 대여소명에 '동'이 표시되어 있지 않은 행 찾기 : 182개 존재
+cond_dong = df_rent1['시작_대여소명'].str.contains('동')
+df_rent1.loc[~cond_dong,:]
+
+# 종료_대여소명 : NaN --> X
+df_rent1['종료_대여소명'].fillna('X',inplace=True)
+
+
+
+# Feature Engineering
+# '시작_대여소_동명', '종료_대여소_동명' 추출
+df_rent1['시작_대여소_동명'] = df_rent1['시작_대여소명'].apply(lambda x:x[:x.find('동')+1])
+df_rent1['종료_대여소_동명'] = df_rent1['종료_대여소명'].apply(lambda x:x[:x.find('동')+1])
+
 
 
  
@@ -39,12 +59,12 @@ std_date = df_rent1['기준_날짜'].unique()
 std_date = np.insert(std_date,0,'선택하세요.')
 
 # 시작대여소 목록 가져오기
-st_rent_id = df_rent1['시작_대여소_ID'].unique()
-st_rent_id = np.insert(st_rent_id,0,'선택하세요.')
+st_rent_name = df_rent1['시작_대여소명'].unique()
+st_rent_name = np.insert(st_rent_name,0,'선택하세요.')
 
 # 종료대여소 목록 가져오기
-end_rent_id = df_rent1['종료_대여소_ID'].unique()
-end_rent_id = np.insert(end_rent_id,0,'선택하세요.')
+end_rent_name = df_rent1['종료_대여소명'].unique()
+end_rent_name = np.insert(end_rent_name,0,'선택하세요.')
 
 
 
@@ -75,20 +95,20 @@ with col1:
 
 with col2:
     # selectbox 
-    sel_st_rent_id = st.selectbox(
+    sel_st_rent_name = st.selectbox(
         # selectbox 위의 설명글
-        '시작_대여소_ID',
+        '시작_대여소명',
         # selectbox 구성요소(튜플의 형태로)
-        (st_rent_id)
+        (st_rent_name)
     )  
 
 with col3:
     # selectbox 
-    sel_end_rent_id = st.selectbox(
+    sel_end_rent_name = st.selectbox(
         # selectbox 위의 설명글
-        '종료_대여소_ID',
+        '종료_대여소명',
         # selectbox 구성요소(튜플의 형태로)
-        (end_rent_id)
+        (end_rent_name)
     ) 
 
 
@@ -102,14 +122,14 @@ if sel_date!='선택하세요.':
 else:
     IsSelected_date = False
     
-if sel_st_rent_id!='선택하세요.':
-    cond_st = (df_rent1['시작_대여소_ID']==sel_st_rent_id)
+if sel_st_rent_name!='선택하세요.':
+    cond_st = (df_rent1['시작_대여소명']==sel_st_rent_name)
     IsSelected_st_rent_id = True
 else:
     IsSelected_st_rent_id = False
     
-if sel_end_rent_id!='선택하세요.':
-    cond_end = (df_rent1['종료_대여소_ID']==sel_end_rent_id)
+if sel_end_rent_name!='선택하세요.':
+    cond_end = (df_rent1['종료_대여소명']==sel_end_rent_name)
     IsSelected_end_rent_id = True
 else:
     IsSelected_end_rent_id = False
@@ -141,10 +161,18 @@ else:
 
 ## 필터링된 데이터 표시
 if ((IsSelected_date==True) | (IsSelected_st_rent_id==True) | (IsSelected_end_rent_id==True)):
-    st.subheader('데이터프레임 출력')
-    st.write(df_rent1.loc[cond,:])
+
+    # 지정된 조건 --> raw data 출력
+    st.subheader('rawdata의 데이터프레임 출력')
+    st.write(df_rent1.loc[cond,:].sort_values(by=['기준_날짜','시작_대여소명','종료_대여소명']))
     st.subheader('')
     
+    # 지정된 조건 --> 합계데이터 출력
+    st.subheader('합계데이터의 데이터프레임 출력')
+    st.write(df_rent1.groupby(['기준_날짜','시작_대여소_ID','종료_대여소_ID']).agg({'전체_건수':sum,'전체_이용_분':sum,'전체_이용_거리':sum}))
+    st.subheader('')
+
+
 # 차트 보여주기
     st.subheader('통계 그래프 시각화')
     col_plt1, col_plt2, col_plt3 = st.columns(3)
