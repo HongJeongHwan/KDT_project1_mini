@@ -28,13 +28,9 @@ $git push -u origin main
 #### - 파일 작업전 반드시 해야될 것.
 $git clone https://github.com/HongJeongHwan/KDT_project1_mini.git
 
-#### - git 프로그램 다운로드(https://git-scm.com/download/)
-
 
 더 자세한 사항은 아래 블로그 참조 부탁드립니다.
 
 ## ★★☆ 함께 작업하며, 함께 공부하고, 함께 성장해요!!! ☆★★
-
-
 
 github 공동작업 참조 블로그 : https://12716.tistory.com/entry/Git-GitHub-%ED%98%91%EC%97%85%ED%95%98%EA%B8%B0
