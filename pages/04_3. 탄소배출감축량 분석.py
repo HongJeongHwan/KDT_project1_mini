@@ -6,7 +6,8 @@ import seaborn as sns
 
 # 데이터 불러오기 : 마스터파일
 file_path = './data/reduced_서울특별시 공공자전거 이용정보(시간대별)_2304.csv'
-df = pd.read_csv(file_path,encoding='cp949')
+# df = pd.read_csv(file_path, encoding='cp949')
+df = pd.read_csv(file_path)
 
 
 # 데이터 전처리
