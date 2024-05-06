@@ -89,7 +89,7 @@ with col2:
     # selectbox 
     sel_st_rent_id = st.selectbox(
         # selectbox 위의 설명글
-        '시작_대여소_동명',
+        '시작_대여소',
         # selectbox 구성요소(튜플의 형태로)
         (st_rent_id)
     )  
